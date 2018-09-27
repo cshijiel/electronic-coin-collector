@@ -56,7 +56,6 @@ public class AverageBalanceJob {
                 currency -> {
                     // Currency(currency=usdt, type=trade, balance=0.001795002580011747)
                     String name = currency.getCurrency().toUpperCase();
-                    String type = currency.getType();
                     return !StringUtils.equalsIgnoreCase(name, "usdt")
                             && avgCoin.contains(name);
                 }
@@ -104,7 +103,7 @@ public class AverageBalanceJob {
                 })
         );
 
-        log.info("xrp btc map is {}", collect);
+        log.info("xrp btc map is {}", currentRatio = collect);
         for (Map.Entry<CoinType, Double> entry : collect.entrySet()) {
             double v = entry.getValue() - 0.55;
             if (v > 0) {
@@ -147,5 +146,11 @@ public class AverageBalanceJob {
                 .build();
         mailService.sendSimpleMail("745656593@qq.com", "自动调仓，卖出" + coinType, place.toString());
         orderService.createOrder(place);
+    }
+
+    private static Map<CoinType, Double> currentRatio = Maps.newHashMap();
+
+    public Map<CoinType, Double> currentRatio() {
+        return currentRatio;
     }
 }
