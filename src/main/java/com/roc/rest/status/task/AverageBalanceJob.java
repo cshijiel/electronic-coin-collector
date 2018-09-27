@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +42,11 @@ public class AverageBalanceJob {
     private MailService mailService;
 
     private static final Set<String> avgCoin = Sets.newHashSet(CoinType.BTC.name(), CoinType.XRP.name());
+
+    @PostConstruct
+    public void sayHello() {
+        mailService.sendSimpleMail("745656593@qq.com", "ECC启动成功！", "OK");
+    }
 
     @Scheduled(fixedDelay = 30 * 1000, initialDelay = 10)
     public void averageStrategy() {
