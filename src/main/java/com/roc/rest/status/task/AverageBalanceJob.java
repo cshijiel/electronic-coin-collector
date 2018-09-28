@@ -81,7 +81,7 @@ public class AverageBalanceJob {
 
         currencies = Lists.newArrayList(mergeMap.values());
 
-        double sum = currencies.stream().mapToDouble(currency -> {
+        double sum = currentSum = currencies.stream().mapToDouble(currency -> {
             Double balance = Double.valueOf(currency.getBalance());
             CoinType coinType = CoinType.valueOf(currency.getCurrency().toUpperCase());
             double close = coinTypePeriod2KlineData.get(coinType).get(KlineTimeWindow.OneMinitue).getFirst().getClose();

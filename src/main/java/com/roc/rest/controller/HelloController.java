@@ -22,4 +22,13 @@ public class HelloController {
     public Map<CoinType, Double> hello() {
         return averageBalanceJob.currentRatio();
     }
+
+    @RequestMapping("kill")
+    public String kill() {
+        try {
+            return "turn off";
+        } finally {
+            System.exit(0);
+        }
+    }
 }
