@@ -2,6 +2,8 @@ package com.roc.rest.controller;
 
 import com.roc.rest.status.bean.CoinType;
 import com.roc.rest.status.task.AverageBalanceJob;
+import lombok.Builder;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,8 +21,11 @@ public class HelloController {
     private AverageBalanceJob averageBalanceJob;
 
     @RequestMapping("")
-    public Map<CoinType, Double> hello() {
-        return averageBalanceJob.currentRatio();
+    public ShortViewVO hello() {
+        return ShortViewVO.builder()
+                .coinRatio(averageBalanceJob.currentRatio())
+                .sum(AverageBalanceJob.currentSum)
+                .build();
     }
 
     @RequestMapping("kill")
@@ -30,5 +35,12 @@ public class HelloController {
         } finally {
             System.exit(0);
         }
+    }
+
+    @Data
+    @Builder
+    private static class ShortViewVO {
+        private Double sum;
+        private Map<CoinType, Double> coinRatio;
     }
 }

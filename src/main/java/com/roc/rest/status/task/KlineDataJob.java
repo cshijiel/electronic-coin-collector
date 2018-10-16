@@ -24,8 +24,8 @@ import java.util.*;
 @Slf4j
 public class KlineDataJob {
 
-    public static Map<CoinType, LinkedList<KlineItem>> coin2KlineMinutesMap = Maps.newHashMap();
-    public static Map<CoinType, Map<KlineTimeWindow, LinkedList<KlineItem>>> coinTypePeriod2KlineData = Maps.newHashMap();
+    public static Map<CoinType, LinkedList<KlineItem>> coin2KlineMinutesMap = Maps.newConcurrentMap();
+    public static Map<CoinType, Map<KlineTimeWindow, LinkedList<KlineItem>>> coinTypePeriod2KlineData = Maps.newConcurrentMap();
 
     public static KlineStatus klineStatus = KlineStatus.FLUCTUATION;
 

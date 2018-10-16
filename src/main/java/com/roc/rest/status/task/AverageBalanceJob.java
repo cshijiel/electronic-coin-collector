@@ -40,7 +40,12 @@ public class AverageBalanceJob {
     @Autowired
     private MailService mailService;
 
-    private static final Set<String> avgCoin = Sets.newHashSet(CoinType.BTC.name(), CoinType.XRP.name());
+    private static final Set<String> avgCoin = Sets.newConcurrentHashSet();
+
+    static {
+        avgCoin.add(CoinType.BTC.name());
+        avgCoin.add(CoinType.XRP.name());
+    }
 
     @Scheduled(fixedDelay = 30 * 1000, initialDelay = 10)
     public void averageStrategy() {
@@ -148,7 +153,7 @@ public class AverageBalanceJob {
         orderService.createOrder(place);
     }
 
-    public static Map<CoinType, Double> currentRatio = Maps.newHashMap();
+    public static Map<CoinType, Double> currentRatio = Maps.newConcurrentMap();
     public static Double currentSum = 0D;
 
     public Map<CoinType, Double> currentRatio() {
